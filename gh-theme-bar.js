@@ -1,5 +1,5 @@
 // theme-action-bar.js
-(function() {
+(function () {
   // Check if the browser supports custom elements
   if (!("customElements" in window)) {
     console.error("Custom Elements not supported");
@@ -10,9 +10,8 @@
     constructor() {
       super();
       this.attachShadow({
-        mode: "open"
+        mode: "open",
       });
-      this.expanded = false;
       this.colorSchemes = [];
       this.buyUrl = "";
       this.themeName = "";
@@ -40,45 +39,6 @@
 
     connectedCallback() {
       this.render();
-      this.addEventListeners();
-    }
-
-    addEventListeners() {
-      const bar = this.shadowRoot.querySelector(".action-bar");
-      const hitArea = this.shadowRoot.querySelector(".hit-area");
-      if (!bar || !hitArea) return;
-
-      hitArea.addEventListener("mouseenter", () => {
-        this.expanded = true;
-        this.updateBarState();
-      });
-
-      bar.addEventListener("mouseleave", () => {
-        this.expanded = false;
-        this.updateBarState();
-      });
-    }
-
-    updateBarState() {
-      const bar = this.shadowRoot.querySelector(".action-bar");
-      const content = this.shadowRoot.querySelector(
-        ".action-bar-content"
-      );
-      if (!bar || !content) return;
-
-      if (this.expanded) {
-        bar.classList.add("expanded");
-        content.classList.add("visible");
-      } else {
-        bar.classList.remove("expanded");
-        content.classList.remove("visible");
-      }
-    }
-
-    setColorScheme(scheme) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("color-scheme", scheme);
-      window.location.href = url.toString();
     }
 
     render() {
@@ -130,9 +90,11 @@
           overflow: hidden;
           z-index: 10000;
           font-size: var(--bar-base-font-size);
+          user-select: none;
         }
         
-        .action-bar.expanded {
+        .hit-area:hover + .action-bar,
+        .action-bar:hover {
           height: var(--bar-height);
           width: auto;
           opacity: 1;
@@ -148,7 +110,8 @@
           transition: opacity var(--transition-speed) ease;
         }
         
-        .action-bar-content.visible {
+        .hit-area:hover + .action-bar .action-bar-content,
+        .action-bar:hover .action-bar-content {
           opacity: 1;
         }
         
@@ -239,9 +202,9 @@
         colorSchemesHTML = this.colorSchemes
           .map(
             ([name, color]) => `
-          <div class="scheme-item" data-scheme="${name}" data-umami-event="${this.themeName}-theme-bar-color-scheme-${name}">
+          <a class="scheme-item" data-scheme="${name}" data-umami-event="${this.themeName}-theme-bar-color-scheme-${name}" href="?color-scheme=${name}">
             <div class="scheme-circle" style="background-color: ${color};"></div>
-          </div>
+          </a>
         `
           )
           .join("");
@@ -273,18 +236,6 @@
       // Clear previous content
       if (this.shadowRoot) {
         this.shadowRoot.innerHTML = templateHTML;
-
-        // Add event listeners to scheme items
-        const schemeItems =
-          this.shadowRoot.querySelectorAll(".scheme-item");
-        schemeItems.forEach((item) => {
-          const schemeName = item.getAttribute("data-scheme");
-          if (schemeName) {
-            item.addEventListener("click", () =>
-              this.setColorScheme(schemeName)
-            );
-          }
-        });
       }
     }
   }
@@ -296,9 +247,6 @@
       customElements.define("theme-action-bar", ThemeActionBar);
     }
   } catch (error) {
-    console.error(
-      "Failed to register theme-action-bar custom element:",
-      error
-    );
+    console.error("Failed to register theme-action-bar custom element:", error);
   }
 })();
