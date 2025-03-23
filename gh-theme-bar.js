@@ -69,6 +69,14 @@
           height: 48px;
           z-index: 9999;
         }
+
+        @media screen and (max-width: 1100px) {
+          .hit-area,
+          .action-bar {
+            display: none !important;
+          }
+        }
+
         
         .action-bar {
           position: fixed;
