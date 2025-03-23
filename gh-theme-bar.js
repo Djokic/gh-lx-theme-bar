@@ -133,7 +133,6 @@
         .action-bar.expanded {
           height: var(--bar-height);
           width: auto;
-          min-width: 20rem;
           opacity: 1;
         }
         
