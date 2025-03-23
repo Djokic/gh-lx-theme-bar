@@ -85,18 +85,19 @@
       const styles = `
         :host {
           --transition-speed: 0.3s;
-          --bar-height: 3rem;
-          --bar-min-height: 1rem;
-          --bar-min-width: 2rem;
+          --bar-base-font-size: 16px;
+          --bar-height: 48px;
+          --bar-min-height: 16px;
+          --bar-min-width: 32px;
           --bar-border-color: rgba(255, 255, 255, 0.1);
-          --bar-border-radius: 2rem;
+          --bar-border-radius: 32px;
           --bar-background: rgba(33, 33, 33, 0.92);
           --bar-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
           --text-color: rgba(255, 255, 255, 0.9);
           --subtle-text-color: rgba(255, 255, 255, 0.6);
-          --scheme-circle-size: 1.5rem;
-          --scheme-gap: 0.5rem;
-          --section-gap: 0.5rem;
+          --scheme-circle-size: 24px;
+          --scheme-gap: 8px;
+          --section-gap: 8px;
         }
         
         .hit-area {
@@ -104,14 +105,14 @@
           bottom: 0;
           left: 50%;
           transform: translateX(-50%);
-          width: 5rem;
-          height: 3rem;
+          width: 80px;
+          height: 48px;
           z-index: 9999;
         }
         
         .action-bar {
           position: fixed;
-          bottom: 1.5rem;
+          bottom: 24px;
           left: 50%;
           transform: translateX(-50%);
           height: var(--bar-min-height);
@@ -128,6 +129,7 @@
           opacity: 0.5;
           overflow: hidden;
           z-index: 10000;
+          font-size: var(--bar-base-font-size);
         }
         
         .action-bar.expanded {
@@ -141,7 +143,7 @@
           align-items: center;
           justify-content: space-between;
           width: 100%;
-          padding: 0 .5rem;
+          padding: 0 8px;
           opacity: 0;
           transition: opacity var(--transition-speed) ease;
         }
@@ -167,7 +169,7 @@
           display: flex;
           align-items: center;
           gap: var(--scheme-gap);
-          flex:1;
+          flex: 1;
         }
         
         .scheme-item {
@@ -192,9 +194,9 @@
           color: var(--text-color);
           text-decoration: none;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 0.875rem;
-          padding: 0.5rem 0.75rem;
-          border-radius: 2rem;
+          font-size: 0.875em; /* 14px with 16px base */
+          padding: 8px 12px;
+          border-radius: 32px;
           transition: background-color 0.2s ease;
           white-space: nowrap;
           display: flex;
@@ -210,11 +212,11 @@
           background-color: rgba(255, 255, 255, 0.9);
           color: rgba(0, 0, 0, 0.8);
           font-weight: 600;
-          border-radius: 2rem;
-          padding: 0.5rem 1rem;
+          border-radius: 32px;
+          padding: 8px 16px;
           display: flex;
           align-items: center;
-          gap: 0.25rem;
+          gap: 4px;
         }
         
         .buy-link:hover {
